@@ -36,3 +36,46 @@ export const Content = styled.div`
     }
   }
 `;
+
+export const Table = styled.table`
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  table-layout: fixed;
+  margin-bottom: 10px;
+
+  thead {
+    tr {
+      th {
+        padding: 10px;
+      }
+      background: ${props => props.theme.colors.light};
+    }
+  }
+
+  tbody {
+    width: 100%;
+    tr {
+      border-bottom: 2px solid ${props => props.theme.colors.light};
+      text-align: left;
+      td {
+        padding: 10px;
+      }
+      th {
+        padding: 10px;
+      }
+    }
+    tr:hover {
+      background: ${props => props.theme.colors.light};
+    }
+    tr:hover {
+      td {
+        form {
+          div {
+            border-color: ${props => props.theme.colors.background};
+          }
+        }
+      }
+    }
+  }
+`;

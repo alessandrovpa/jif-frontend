@@ -153,7 +153,7 @@ const ShowAthlete: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
           contact: Yup.string()
             .required('Telefone obrigatóio')
             .min(10, 'Mínimo 10 caracteres')
-            .max(11, 'Máximo 11 caracteres'),
+            .max(15, 'Máximo 15 caracteres'),
           nickname: Yup.string().required('Nickname obrigatóio'),
           game_id: Yup.string().required('ID Obrigatória'),
           picture: Yup.mixed()
@@ -225,25 +225,49 @@ const ShowAthlete: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
             abortEarly: false,
           },
         );
-        const res = await api.post(
-          '/athlete',
-          {
-            name: data.name,
-            email: data.email,
-            birth: data.birth,
-            identity: data.identity,
-            genre,
-            contact: data.contact,
-            nickname: data.nickname,
-            game_id: data.game_id,
-            modalities,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('@JIF:token')}`,
+        let res;
+        if (!id) {
+          res = await api.post(
+            '/athlete',
+            {
+              name: data.name,
+              email: data.email,
+              birth: data.birth,
+              identity: data.identity,
+              genre,
+              contact: data.contact,
+              nickname: data.nickname,
+              game_id: data.game_id,
+              modalities,
             },
-          },
-        );
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('@JIF:token')}`,
+              },
+            },
+          );
+        } else {
+          res = await api.post(
+            `/athlete/${id}/update`,
+            {
+              name: data.name,
+              email: data.email,
+              birth: data.birth,
+              identity: data.identity,
+              genre,
+              contact: data.contact,
+              nickname: data.nickname,
+              game_id: data.game_id,
+              modalities,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('@JIF:token')}`,
+              },
+            },
+          );
+        }
+
         formData.append('athlete_id', res.data.id);
         await api.post('/athlete/files', formData, {
           headers: {
@@ -415,7 +439,7 @@ const ShowAthlete: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
                 </Input>
               ))}
 
-            <Button type="submit">Cadastrar</Button>
+            <Button type="submit">Enviar</Button>
           </Form>
         </div>
       </Content>

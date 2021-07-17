@@ -8,6 +8,11 @@ export default createGlobalStyle`
     outline: 0;
   }
 
+  html{
+    height: 100%;
+    width: 100%;
+  }
+
   body {
     color: ${props => props.theme.colors.textLight};
     background-color: ${props => props.theme.colors.background};

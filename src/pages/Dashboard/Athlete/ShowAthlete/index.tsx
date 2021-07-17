@@ -6,7 +6,7 @@ import React, {
   useRef,
   useContext,
 } from 'react';
-import { parseISO, format } from 'date-fns';
+import { parseISO, format, addDays } from 'date-fns';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
@@ -139,7 +139,7 @@ const ShowAthlete: React.FC<ComponentProps> = ({ id, resetShow }) => {
   }, [search, getUserAcces]);
 
   const formatDate = useCallback((date: string) => {
-    const formattedDate = format(parseISO(date), 'dd/MM/yyyy');
+    const formattedDate = format(addDays(parseISO(date), 1), 'dd/MM/yyyy');
     return formattedDate;
   }, []);
 

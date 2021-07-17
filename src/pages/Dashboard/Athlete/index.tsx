@@ -61,6 +61,7 @@ const Athlete: React.FC = () => {
   const searchByDelegation = useCallback(
     async (data?: SearchAthleteFormData) => {
       setShow(undefined);
+      setOpenForm({ id: '', open: false });
       let url = '/athlete';
       if (data) {
         setSearchDelegationId(data.delegation_id);
@@ -173,7 +174,7 @@ const Athlete: React.FC = () => {
 
   return (
     <Container>
-      {access <= 1 && (
+      {access <= 1 && !openForm.open && (
         <Content>
           <Form ref={formRef} onSubmit={searchByDelegation}>
             <h2>Buscar por delegação</h2>
@@ -212,6 +213,7 @@ const Athlete: React.FC = () => {
                 <th>Nome</th>
                 <th>Documento</th>
                 <th>Status</th>
+                <th>Editar</th>
                 <th>Remover</th>
               </tr>
             </thead>
@@ -221,6 +223,13 @@ const Athlete: React.FC = () => {
                   <td onClick={() => handleClick(p.id)}>{p.name}</td>
                   <td onClick={() => handleClick(p.id)}>{p.identity}</td>
                   <td onClick={() => handleClick(p.id)}>{status[p.status]}</td>
+                  <td>
+                    <Button
+                      onClick={() => setOpenForm({ id: p.id, open: true })}
+                    >
+                      Editar
+                    </Button>
+                  </td>
                   <td>
                     <Button onClick={() => deleteAthlete(p.id)}>Remover</Button>
                   </td>

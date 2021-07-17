@@ -64,6 +64,31 @@ const UserFunction: React.FC = () => {
     searchFunctions();
   }, [searchFunctions, setOpenForm]);
 
+  const deleteFunction = useCallback(
+    async function_id => {
+      const result = window.confirm('Deseja remover esta função?');
+      if (result) {
+        try {
+          await api.delete('/function', {
+            data: { function_id },
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('@JIF:token')}`,
+            },
+          });
+        } catch (err) {
+          addToast({
+            type: err.response.data.status,
+            title: 'Error',
+            description: err.response.data.message,
+          });
+        }
+
+        searchFunctions();
+      }
+    },
+    [searchFunctions, addToast],
+  );
+
   useEffect(() => {
     searchFunctions();
   }, [searchFunctions]);
@@ -92,7 +117,9 @@ const UserFunction: React.FC = () => {
                   <td>{f.name}</td>
                   <td>{userFunctions[f.access]}</td>
                   <td>
-                    <Button>Remover</Button>
+                    <Button onClick={() => deleteFunction(f.id)}>
+                      Remover
+                    </Button>
                   </td>
                 </tr>
               ))}
