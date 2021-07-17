@@ -9,7 +9,7 @@ import AppProvider from './context';
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="https://jifnacional.ifgoiano.edu.br">
       <AppProvider>
         <Routes />
 
