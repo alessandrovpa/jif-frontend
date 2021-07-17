@@ -80,7 +80,7 @@ const Modality: React.FC = () => {
         searchModalities();
       }
     },
-    [searchModalities],
+    [searchModalities, addToast],
   );
 
   useEffect(() => {

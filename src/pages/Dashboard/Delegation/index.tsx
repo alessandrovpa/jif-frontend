@@ -77,7 +77,7 @@ const Delegation: React.FC = () => {
         searchDelegation();
       }
     },
-    [searchDelegation],
+    [searchDelegation, addToast],
   );
 
   useEffect(() => {

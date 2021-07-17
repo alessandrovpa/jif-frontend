@@ -71,7 +71,7 @@ const User: React.FC = () => {
         searchUsers();
       }
     },
-    [searchUsers],
+    [searchUsers, addToast],
   );
 
   useEffect(() => {

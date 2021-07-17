@@ -168,7 +168,7 @@ const Athlete: React.FC = () => {
         searchByDelegation();
       }
     },
-    [searchByDelegation],
+    [searchByDelegation, addToast],
   );
 
   return (
