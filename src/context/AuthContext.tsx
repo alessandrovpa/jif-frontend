@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useState } from 'react';
+import React, { createContext, useCallback, useState, useEffect } from 'react';
 import api from '../services/api';
 
 interface AuthState {
@@ -85,25 +85,27 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({} as AuthState);
   }, []);
 
-  //const verifyToken = useCallback(async () => {
-  //  const token = localStorage.getItem('@JIF:token');
-  //  if (token) {
-  //    try {
-  //      await api.post('/session/verify', {
-  //        token: `Bearer ${token}`,
-  //      });
-  //    } catch (err) {
-  //      signOut();
-  //    }
-  //  }
-  //}, [signOut]);
+  const verifyToken = useCallback(async () => {
+    const token = localStorage.getItem('@JIF:token');
+    if (token) {
+      try {
+        await api.get('/user/access', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('@JIF:token')}`,
+          },
+        });
+      } catch (err) {
+        signOut();
+      }
+    }
+  }, [signOut]);
 
-  //useEffect(() => {
-  //  verifyToken();
-  //  setInterval(async () => {
-  //    await verifyToken();
-  //  }, 30000);
-  //}, [verifyToken]);
+  useEffect(() => {
+    verifyToken();
+    setInterval(async () => {
+      await verifyToken();
+    }, 30000);
+  }, [verifyToken]);
 
   return (
     <AuthContext.Provider

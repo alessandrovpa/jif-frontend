@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState, useContext } from 'react';
 import { ToastContext } from '../../../context/ToastContext';
 
+import ShowUser from './ShowUser';
+
 import UserForm from './UserForm';
 
 import Button from '../../../components/Button';
@@ -23,6 +25,7 @@ const User: React.FC = () => {
   const [users, setUsers] = useState<UserInterface[]>([]);
   const { addToast } = useContext(ToastContext);
   const [openForm, setOpenForm] = useState(false);
+  const [show, setShow] = useState<string>();
 
   const searchUsers = useCallback(async () => {
     try {
@@ -74,6 +77,11 @@ const User: React.FC = () => {
     [searchUsers, addToast],
   );
 
+  const resetShow = useCallback(() => {
+    setShow(undefined);
+    searchUsers();
+  }, [searchUsers]);
+
   useEffect(() => {
     searchUsers();
   }, [setUsers, searchUsers]);
@@ -86,7 +94,7 @@ const User: React.FC = () => {
           <Button onClick={() => setOpenForm(true)}>Cadastrar</Button>
         </Content>
       )}
-      {!openForm && users && (
+      {!openForm && !show && users && (
         <Content>
           <Table>
             <thead>
@@ -100,9 +108,9 @@ const User: React.FC = () => {
             <tbody>
               {users.map(u => (
                 <tr key={u.id}>
-                  <td>{u.name}</td>
-                  <td>{u.siape}</td>
-                  <td>{u.delegation.name}</td>
+                  <td onClick={() => setShow(u.id)}>{u.name}</td>
+                  <td onClick={() => setShow(u.id)}>{u.siape}</td>
+                  <td onClick={() => setShow(u.id)}>{u.delegation.name}</td>
                   <td>
                     <Button onClick={() => deleteUser(u.id)}>Remover</Button>
                   </td>
@@ -116,6 +124,12 @@ const User: React.FC = () => {
       {openForm && (
         <Content>
           <UserForm resetShowForm={resetOpenForm} />
+        </Content>
+      )}
+
+      {show && (
+        <Content>
+          <ShowUser id={show} resetShow={resetShow} />
         </Content>
       )}
     </Container>
