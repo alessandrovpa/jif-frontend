@@ -52,6 +52,5 @@ export const MenuData: Array<InterfaceMenuData> = [
     title: 'Primeiro acesso',
     path: '/firstlogin',
     icon: <HiUsers />,
-    required: 5,
   },
 ];
