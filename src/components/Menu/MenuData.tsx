@@ -48,4 +48,10 @@ export const MenuData: Array<InterfaceMenuData> = [
     icon: <HiUsers />,
     required: 1,
   },
+  {
+    title: 'Primeiro acesso',
+    path: '/firstlogin',
+    icon: <HiUsers />,
+    required: 5,
+  },
 ];
