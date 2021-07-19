@@ -22,23 +22,12 @@ const Routes: React.FC<RouteProps> = ({
     <ReactDOMRoute
       {...rest}
       render={({ location }) => {
-        let finalpath;
-        let firstLogin = false;
-        if (user) {
-          firstLogin = user.created_at === user.updated_at;
-          if (firstLogin) {
-            finalpath = '/firstlogin';
-          } else {
-            finalpath = '/dashboard';
-          }
-        }
-        console.log(finalpath);
         return isPrivate === !!token ? (
           <Component />
         ) : (
           <Redirect
             to={{
-              pathname: isPrivate ? '/' : finalpath,
+              pathname: isPrivate ? '/' : '/dashboard',
               state: { from: location },
             }}
           />
