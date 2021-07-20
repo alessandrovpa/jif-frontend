@@ -35,7 +35,15 @@ const ModalityForm: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
 
   const handleSubmit = useCallback(
     async data => {
-      console.log(data);
+      let genre;
+      const genres = document.querySelectorAll<HTMLInputElement>(
+        'input[name="genre"]',
+      );
+      genres.forEach(g => {
+        if (g.checked) {
+          genre = g.value;
+        }
+      });
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
@@ -50,14 +58,22 @@ const ModalityForm: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
             .required('Reserva obrigatório')
             .positive('Não pode ser menor que 0'),
         });
-        await schema.validate(data, {
-          abortEarly: false,
-        });
+        await schema.validate(
+          {
+            name: data.name,
+            genre,
+            holder: data.holder,
+            backup: data.backup,
+          },
+          {
+            abortEarly: false,
+          },
+        );
         const res = await api.post(
           '/modality',
           {
             name: data.name,
-            genre: data.genre,
+            genre,
             holder: data.holder,
             backup: data.backup,
           },
