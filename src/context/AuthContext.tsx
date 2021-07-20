@@ -104,7 +104,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     verifyToken();
     setInterval(async () => {
       await verifyToken();
-    }, 30000);
+    }, 300000);
   }, [verifyToken]);
 
   return (

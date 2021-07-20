@@ -42,7 +42,7 @@ export const Container = styled.div<ContainerProps>`
     background: none;
     border: 0;
     &::placeholder {
-      color: ${props => props.theme.colors.background};
+      color: ${props => props.theme.colors.textDark};
       opacity: 0.5;
     }
   }

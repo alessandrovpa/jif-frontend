@@ -292,7 +292,7 @@ const ShowAthlete: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
         });
       }
     },
-    [addToast, formData, resetShowForm],
+    [addToast, formData, resetShowForm, id],
   );
 
   useEffect(() => {

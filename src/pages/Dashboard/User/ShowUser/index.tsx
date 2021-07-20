@@ -1,6 +1,5 @@
 /* eslint-disable import/no-duplicates */
 import React, { useEffect, useState, useCallback } from 'react';
-import { parseISO, format } from 'date-fns';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import api from '../../../../services/api';
 
@@ -41,11 +40,6 @@ const ShowUser: React.FC<ComponentProps> = ({ id, resetShow }) => {
   useEffect(() => {
     search();
   }, [search]);
-
-  const formatDate = useCallback((date: string) => {
-    const formattedDate = format(parseISO(date), 'dd/MM/yyyy');
-    return formattedDate;
-  }, []);
 
   return (
     <Container>
