@@ -180,6 +180,7 @@ const FirstLogin: React.FC = () => {
             type="password"
             placeholder="Confirme sua nova senha"
           />
+          <h2>Formatos aceitos: jpg, jpeg, png e pdf</h2>
           <Input
             name="portaria"
             type="file"
