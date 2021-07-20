@@ -12,6 +12,7 @@ import { Form } from '@unform/web';
 import { FormHandles } from '@unform/core';
 import api from '../../../../services/api';
 import { ToastContext } from '../../../../context/ToastContext';
+import { AuthContext } from '../../../../context/AuthContext';
 import Button from '../../../../components/Button';
 import Input from '../../../../components/Input';
 import { FaUserAlt } from 'react-icons/fa';
@@ -34,6 +35,7 @@ interface DelegationAndFunctionInterface {
 
 const UserForm: React.FC<ComponentProps> = ({ resetShowForm }) => {
   const { addToast } = useContext(ToastContext);
+  const { user } = useContext(AuthContext);
   const formRef = useRef<FormHandles>(null);
   const [delegations, setDelegations] = useState<OptionsProps[]>([]);
   const [functions, setFunctions] = useState<OptionsProps[]>([]);
@@ -164,7 +166,10 @@ const UserForm: React.FC<ComponentProps> = ({ resetShowForm }) => {
               placeholder="SIAPE"
               icon={AiFillFileText}
             ></Input>
-            <Select name="delegation_id" options={delegations}></Select>
+            {user.access <= 1 && (
+              <Select name="delegation_id" options={delegations}></Select>
+            )}
+
             <Select name="function_id" options={functions}></Select>
             <Button type="submit">Cadastrar</Button>
           </Form>

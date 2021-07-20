@@ -2,6 +2,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
 import api from '../../../../services/api';
+import Button from '../../../../components/Button';
 
 import { Container, Content, Table } from './styles';
 
@@ -78,7 +79,15 @@ const ShowUser: React.FC<ComponentProps> = ({ id, resetShow }) => {
         </div>
         <div id="documents">
           <h1>Documentos</h1>
-          <img src={user?.portaria_url} alt="Portaria" />
+          {user?.portaria_url.split('.').pop() === 'pdf' && (
+            <a href={user.portaria_url} target="_blank">
+              <Button>Ver Portaria</Button>
+            </a>
+          )}
+          {user?.portaria_url.split('.').pop() != 'pdf' && (
+            <img src={user?.portaria_url} alt="Portaria" />
+          )}
+
           <img src={user?.document_url} alt="Foto da frente do documento" />
           <img src={user?.document_back_url} alt="Foto do verso do documento" />
         </div>

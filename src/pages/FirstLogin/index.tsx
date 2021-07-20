@@ -28,6 +28,13 @@ interface SignInFormData {
   password: string;
 }
 
+const PORTARIA_SUPPORTED_FORMATS = [
+  'image/jpg',
+  'image/jpeg',
+  'image/png',
+  'application/pdf',
+];
+
 const SUPPORTED_FORMATS = ['image/jpg', 'image/jpeg', 'image/png'];
 
 const FILE_SIZE = 2097152;
@@ -87,7 +94,7 @@ const FirstLogin: React.FC = () => {
             .test(
               'fileFormat',
               'Formato inválido',
-              value => value && SUPPORTED_FORMATS.includes(value.type),
+              value => value && PORTARIA_SUPPORTED_FORMATS.includes(value.type),
             ),
           document: Yup.mixed()
             .required('Documento obrigatório')
@@ -180,7 +187,8 @@ const FirstLogin: React.FC = () => {
             type="password"
             placeholder="Confirme sua nova senha"
           />
-          <h2>Formatos aceitos: jpg, jpeg, png e pdf</h2>
+          <h2>Formatos aceitos: jpg, jpeg, png; pdf apenas para a portaria</h2>
+          <h3>Arquivos de até no máximo 2MB</h3>
           <Input
             name="portaria"
             type="file"
