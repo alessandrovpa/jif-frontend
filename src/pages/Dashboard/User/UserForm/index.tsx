@@ -44,19 +44,36 @@ const UserForm: React.FC<ComponentProps> = ({ resetShowForm }) => {
     async data => {
       try {
         formRef.current?.setErrors({});
-        const schema = Yup.object().shape({
-          name: Yup.string().required('Nome obrigatóio'),
-          email: Yup.string()
-            .required('Email obrigatório')
-            .email('Formato inválido'),
-          contact: Yup.string()
-            .required('Contato obrigatório')
-            .min(10, 'Mínimo 10 digitos')
-            .max(11, 'Máximo 11 digitos'),
-          siape: Yup.string().required('SIAPE obrigatório'),
-          delegation_id: Yup.string().required('Delegação obrigatória'),
-          function_id: Yup.string().required('Função obrigatória'),
-        });
+        let schema;
+        if (user.access <= 1) {
+          schema = Yup.object().shape({
+            name: Yup.string().required('Nome obrigatóio'),
+            email: Yup.string()
+              .required('Email obrigatório')
+              .email('Formato inválido'),
+            contact: Yup.string()
+              .required('Contato obrigatório')
+              .min(10, 'Mínimo 10 digitos')
+              .max(11, 'Máximo 11 digitos'),
+            siape: Yup.string().required('SIAPE obrigatório'),
+            delegation_id: Yup.string().required('Delegação obrigatória'),
+            function_id: Yup.string().required('Função obrigatória'),
+          });
+        } else {
+          schema = Yup.object().shape({
+            name: Yup.string().required('Nome obrigatóio'),
+            email: Yup.string()
+              .required('Email obrigatório')
+              .email('Formato inválido'),
+            contact: Yup.string()
+              .required('Contato obrigatório')
+              .min(10, 'Mínimo 10 digitos')
+              .max(11, 'Máximo 11 digitos'),
+            siape: Yup.string().required('SIAPE obrigatório'),
+            function_id: Yup.string().required('Função obrigatória'),
+          });
+        }
+
         await schema.validate(data, {
           abortEarly: false,
         });
