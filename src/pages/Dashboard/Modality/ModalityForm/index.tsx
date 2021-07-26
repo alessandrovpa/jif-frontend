@@ -51,12 +51,10 @@ const ModalityForm: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
           genre: Yup.string().required('Gênero obrigatório'),
           holder: Yup.number()
             .integer('Deve ser um número')
-            .required('Títulares obrigatório')
-            .positive('Não pode ser menor que 0'),
+            .required('Títulares obrigatório'),
           backup: Yup.number()
             .integer('Deve ser um número')
-            .required('Reserva obrigatório')
-            .positive('Não pode ser menor que 0'),
+            .required('Reservas obrigatório'),
         });
         await schema.validate(
           {
