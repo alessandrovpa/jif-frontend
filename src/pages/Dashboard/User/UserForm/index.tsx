@@ -100,7 +100,7 @@ const UserForm: React.FC<ComponentProps> = ({ resetShowForm }) => {
         });
       }
     },
-    [addToast, resetShowForm],
+    [addToast, resetShowForm, user.access],
   );
 
   const searchSelectOptions = useCallback(async () => {

@@ -140,7 +140,6 @@ const ShowAthlete: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
         }
       });
       try {
-        console.log(data);
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome obrigatóio'),
@@ -156,6 +155,9 @@ const ShowAthlete: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
             .max(15, 'Máximo 15 caracteres'),
           nickname: Yup.string().required('Nickname obrigatóio'),
           game_id: Yup.string().required('ID Obrigatória'),
+          modalities: Yup.array()
+            .required('Selecione 1 modalidade')
+            .min(1, 'Selecione 1 modalidade'),
           picture: Yup.mixed()
             .required('Foto 3x4 obrigatória')
             .test(
@@ -216,6 +218,7 @@ const ShowAthlete: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
             contact: data.contact,
             nickname: data.nickname,
             game_id: data.game_id,
+            modalities,
             picture: formData.get('picture'),
             document: formData.get('document'),
             document_back: formData.get('document_back'),

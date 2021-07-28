@@ -80,12 +80,16 @@ const ShowUser: React.FC<ComponentProps> = ({ id, resetShow }) => {
         <div id="documents">
           <h1>Documentos</h1>
           {user?.portaria_url && user?.portaria_url.split('.').pop() === 'pdf' && (
-            <a href={user.portaria_url} target="_blank">
+            <a
+              href={user.portaria_url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button>Ver Portaria</Button>
             </a>
           )}
           {user?.portaria_url &&
-            user?.portaria_url.split('.').pop() != 'pdf' && (
+            user?.portaria_url.split('.').pop() !== 'pdf' && (
               <img src={user?.portaria_url} alt="Portaria" />
             )}
 
