@@ -110,6 +110,7 @@ const Athlete: React.FC = () => {
       if (res.data.length > 0) {
         res.data.map((delegation: DelegationInterface) => {
           delegation['name'] = delegation.abreviation;
+          delegation['value'] = delegation.id;
           return delegation;
         });
         setDelegations(res.data);
