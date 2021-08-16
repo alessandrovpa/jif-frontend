@@ -4,6 +4,7 @@ import { AiFillHome } from 'react-icons/ai';
 import { FaTasks } from 'react-icons/fa';
 import { RiTeamFill } from 'react-icons/ri';
 import { HiUsers } from 'react-icons/hi';
+import { CgList } from 'react-icons/cg';
 
 interface InterfaceMenuData {
   title: string;
@@ -46,6 +47,12 @@ export const MenuData: Array<InterfaceMenuData> = [
     title: 'Funções',
     path: '/dashboard/function',
     icon: <HiUsers />,
+    required: 1,
+  },
+  {
+    title: 'Relatórios',
+    path: '/dashboard/relatory',
+    icon: <CgList />,
     required: 1,
   },
   {

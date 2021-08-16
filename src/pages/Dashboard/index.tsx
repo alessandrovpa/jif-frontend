@@ -11,6 +11,7 @@ import User from './User';
 import Delegation from './Delegation';
 import Modality from './Modality';
 import UserFunction from './Function';
+import Relatory from './Relatory';
 import Home from './Home';
 
 const pages = {
@@ -20,6 +21,7 @@ const pages = {
   user: <User />,
   modality: <Modality />,
   function: <UserFunction />,
+  relatory: <Relatory />,
 };
 
 const Dashboard: React.FC = () => {
@@ -48,6 +50,9 @@ const Dashboard: React.FC = () => {
         case '/dashboard/function':
           setActualPage(pages.function);
           break;
+        case '/dashboard/relatory':
+          setActualPage(pages.relatory);
+          break;
         default:
           setActualPage(pages.home);
           break;
@@ -75,6 +80,9 @@ const Dashboard: React.FC = () => {
         break;
       case '/dashboard/function':
         setActualPage(pages.function);
+        break;
+      case '/dashboard/relatory':
+        setActualPage(pages.relatory);
         break;
       default:
         setActualPage(pages.home);

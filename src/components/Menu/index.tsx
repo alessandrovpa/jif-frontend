@@ -91,13 +91,13 @@ const Menu: React.FC<MenuProps> = ({ changeLocation }) => {
               ),
           )}
           <Anchor
-            to={MenuData[6].path}
-            key={MenuData[6].path}
-            onClick={() => handleChangePage(MenuData[6].path)}
-            isActived={actualPage === MenuData[6].path}
+            to={MenuData[7].path}
+            key={MenuData[7].path}
+            onClick={() => handleChangePage(MenuData[7].path)}
+            isActived={actualPage === MenuData[7].path}
           >
-            {MenuData[6].icon}
-            <li>{MenuData[6].title}</li>
+            {MenuData[7].icon}
+            <li>{MenuData[7].title}</li>
           </Anchor>
         </Ul>
       )}
