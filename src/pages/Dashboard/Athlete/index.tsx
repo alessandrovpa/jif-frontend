@@ -38,6 +38,7 @@ interface SearchAthleteFormData {
 interface DelegationInterface {
   id: string;
   name: string;
+  abreviation: string;
   value: string;
 }
 
@@ -108,7 +109,7 @@ const Athlete: React.FC = () => {
       });
       if (res.data.length > 0) {
         res.data.map((delegation: DelegationInterface) => {
-          delegation['value'] = delegation.id;
+          delegation['name'] = delegation.abreviation;
           return delegation;
         });
         setDelegations(res.data);
