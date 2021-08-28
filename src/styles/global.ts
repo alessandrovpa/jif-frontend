@@ -50,4 +50,44 @@ export default createGlobalStyle`
       font-size: 0.7rem;
     }
   }
+
+  @media print{
+    @page {
+      margin: 0.5cm;
+    }
+    body *{
+      visibility: hidden;
+    }
+    * {
+      background:transparent !important;
+      color:#000 !important;
+      text-shadow:none !important;
+      filter:none !important;
+      -ms-filter:none !important;
+    }
+
+    body {
+      margin:0;
+      padding:0;
+      line-height: 1.4em;
+    }
+    header, nav{
+      display: none;
+    }
+    table{
+      width: 100%;
+    }
+    h1, h2, table, div{
+      margin: 0;
+    }
+    table, h1, h2, thead, body, tr, td , th{
+      visibility: visible;
+    }
+    header h1{
+      display: none;
+    }
+    table{
+      width: 100%;
+    }
+  }
 `;

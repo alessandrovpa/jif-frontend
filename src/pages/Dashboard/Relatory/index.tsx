@@ -1,46 +1,59 @@
-import React, { useCallback, useEffect, useState, useContext } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+  useContext,
+  useRef,
+} from 'react';
 import { ToastContext } from '../../../context/ToastContext';
+import { Form } from '@unform/web';
+import { FormHandles } from '@unform/core';
 
 import ShowRelatory from './ShowRelatory';
-
-import Table from '../../../components/Table';
+import Select, { OptionsProps } from '../../../components/Select';
+import Button from '../../../components/Button';
 
 import api from '../../../services/api';
 
 import { Container, Content } from './styles';
 
-interface Relatory {
-  delegation_id: number;
-  delegation: string;
-  relatory: {
-    modality_id: number;
-    modality: string;
-    count: number;
-  }[];
+interface ModalityInterface {
+  id: string;
+  name: string;
+  genre: string;
+  value: string;
 }
 
-interface OpenFullRelatory {
-  delegation_id: number;
+interface ListAthletesFormData {
   modality_id: number;
-  delegation: string;
-  modality: string;
 }
 
 const Relatory: React.FC = () => {
   const { addToast } = useContext(ToastContext);
-  const [relatory, setRelatory] = useState<Relatory[]>([]);
-  const [openFullRelatory, setOpenFullRelatory] = useState<OpenFullRelatory>(
-    {} as OpenFullRelatory,
-  );
+  const [openFullRelatory, setOpenFullRelatory] = useState<number>();
+  const [modalities, setModalities] = useState<OptionsProps[]>([]);
+  const formRef = useRef<FormHandles>(null);
 
-  const getRelatory = useCallback(async () => {
+  const getModalities = useCallback(async () => {
     try {
-      const res = await api.get('/relatory/modalities', {
+      const res = await api.get('/modality', {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('@JIF:token')}`,
         },
       });
-      setRelatory(res.data);
+      if (res.data.length > 0) {
+        res.data.map((modality: ModalityInterface) => {
+          modality[
+            'name'
+          ] = `${modality.name.toUpperCase()} - ${modality.genre.toUpperCase()}`;
+          modality['value'] = modality.id;
+          return modality;
+        });
+        setModalities(res.data);
+      } else {
+        setModalities([]);
+      }
+      setModalities(res.data);
     } catch (err) {
       addToast({
         type: err.response.data.status,
@@ -50,60 +63,37 @@ const Relatory: React.FC = () => {
     }
   }, [addToast]);
 
-  const openRelatory = useCallback(
-    (delegation_id, modality_id, delegation, modality) => {
-      setOpenFullRelatory({ delegation, delegation_id, modality, modality_id });
-    },
-    [],
-  );
+  const searchByModality = useCallback(async (data?: ListAthletesFormData) => {
+    if (data) {
+      setOpenFullRelatory(data.modality_id);
+      console.log(data);
+    }
+  }, []);
 
   const resetOpenRelatory = useCallback(() => {
-    setOpenFullRelatory({} as OpenFullRelatory);
+    setOpenFullRelatory(undefined);
   }, []);
 
   useEffect(() => {
-    getRelatory();
-  }, [getRelatory]);
+    getModalities();
+  }, [getModalities]);
 
   return (
     <Container>
       <Content>
         <h1>Relatório de inscrições</h1>
-        {relatory &&
-          !openFullRelatory.delegation &&
-          relatory.map(delegationRelatory => (
-            <Table key={delegationRelatory.delegation}>
-              <thead>
-                <tr>
-                  <th colSpan={2}>{delegationRelatory.delegation}</th>
-                </tr>
-              </thead>
-              <tbody>
-                {delegationRelatory.relatory.map(modalityRelatory => (
-                  <tr
-                    key={modalityRelatory.modality}
-                    onClick={() =>
-                      openRelatory(
-                        delegationRelatory.delegation_id,
-                        modalityRelatory.modality_id,
-                        delegationRelatory.delegation,
-                        modalityRelatory.modality,
-                      )
-                    }
-                  >
-                    <td>{modalityRelatory.modality}</td>
-                    <td>{modalityRelatory.count}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          ))}
-        {openFullRelatory.delegation && (
+        {!openFullRelatory && (
+          <Form ref={formRef} onSubmit={searchByModality}>
+            <h2>Buscar por delegação</h2>
+            <Select id="modality_id" name="modality_id" options={modalities}>
+              Delegação
+            </Select>
+            <Button type="submit">Buscar</Button>
+          </Form>
+        )}
+        {openFullRelatory && (
           <ShowRelatory
-            delegation_id={openFullRelatory.delegation_id}
-            modality_id={openFullRelatory.modality_id}
-            delegation={openFullRelatory.delegation}
-            modality={openFullRelatory.modality}
+            modality_id={openFullRelatory}
             resetShow={resetOpenRelatory}
           />
         )}

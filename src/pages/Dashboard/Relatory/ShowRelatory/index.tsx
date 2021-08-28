@@ -1,57 +1,46 @@
 /* eslint-disable import/no-duplicates */
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useRef,
-  useContext,
-} from 'react';
-import { parseISO, format } from 'date-fns';
+import React, { useEffect, useState, useCallback } from 'react';
 import { AiFillCloseCircle } from 'react-icons/ai';
-import { Form } from '@unform/web';
-import { FormHandles } from '@unform/core';
 import api from '../../../../services/api';
-import { ToastContext } from '../../../../context/ToastContext';
-import Button from '../../../../components/Button';
-import Input from '../../../../components/Input';
 
 import { Container, Content, Table } from './styles';
 
 interface ComponentProps {
-  delegation_id: number;
   modality_id: number;
-  delegation: string;
-  modality: string;
   resetShow(): void;
 }
 
+interface Response {
+  modality: string;
+  athletes: AthletesInterface[];
+}
 interface AthletesInterface {
   id: number;
   name: string;
-  identity: string;
+  email: string;
+  contact: string;
+  nickname: string;
+  game_id: string;
+  delegation: {
+    abreviation: string;
+  };
 }
 
 const ShowRelatory: React.FC<ComponentProps> = ({
-  delegation_id,
   modality_id,
-  delegation,
-  modality,
   resetShow,
 }: ComponentProps) => {
-  const [athletes, setAthletes] = useState<AthletesInterface[]>();
+  const [athletes, setAthletes] = useState<Response>();
 
   const search = useCallback(() => {
     api
-      .get(
-        `/athlete?delegation_id=${delegation_id}&modality_id=${modality_id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('@JIF:token')}`,
-          },
+      .get(`/athlete?modality_id=${modality_id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('@JIF:token')}`,
         },
-      )
+      })
       .then(data => setAthletes(data.data));
-  }, [delegation_id, modality_id]);
+  }, [modality_id]);
 
   useEffect(() => {
     search();
@@ -61,26 +50,33 @@ const ShowRelatory: React.FC<ComponentProps> = ({
     <Container>
       <Content>
         <div id="title">
-          <h1>{delegation}</h1>
+          {athletes && <h1>{athletes.modality}</h1>}
           <button type="button" onClick={resetShow}>
             <AiFillCloseCircle size={30} />
           </button>
         </div>
-        <h2>{modality}</h2>
 
         <Table>
           <thead>
             <tr>
+              <th>Delegação</th>
               <th>Nome</th>
-              <th>Identidade</th>
+              <th>Nickname/Invocador</th>
+              <th>ID/Zoom</th>
+              <th>Contato</th>
+              <th>Email</th>
             </tr>
           </thead>
           <tbody>
             {athletes &&
-              athletes.map(athlete => (
+              athletes.athletes.map(athlete => (
                 <tr key={athlete.id}>
+                  <td>{athlete.delegation.abreviation}</td>
                   <td>{athlete.name}</td>
-                  <td>{athlete.identity}</td>
+                  <td>{athlete.nickname}</td>
+                  <td>{athlete.game_id}</td>
+                  <td>{athlete.contact}</td>
+                  <td>{athlete.email}</td>
                 </tr>
               ))}
           </tbody>

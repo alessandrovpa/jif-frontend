@@ -137,7 +137,7 @@ const Athlete: React.FC = () => {
 
   const resetShow = useCallback(() => {
     setShow(undefined);
-  }, [searchByDelegation]);
+  }, []);
 
   const resetOpenForm = useCallback(() => {
     setOpenForm({ id: '', open: false });
