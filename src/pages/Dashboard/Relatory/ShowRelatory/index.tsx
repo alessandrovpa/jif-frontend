@@ -64,7 +64,6 @@ const ShowRelatory: React.FC<ComponentProps> = ({
               <th>Nickname/Invocador</th>
               <th>ID/Zoom</th>
               <th>Contato</th>
-              <th>Email</th>
             </tr>
           </thead>
           <tbody>
@@ -76,7 +75,6 @@ const ShowRelatory: React.FC<ComponentProps> = ({
                   <td>{athlete.nickname}</td>
                   <td>{athlete.game_id}</td>
                   <td>{athlete.contact}</td>
-                  <td>{athlete.email}</td>
                 </tr>
               ))}
           </tbody>
