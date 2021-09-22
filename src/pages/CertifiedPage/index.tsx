@@ -35,7 +35,6 @@ const CertifiedPage: React.FC = () => {
           abortEarly: false,
         });
         const res = await api.get(`certified?email=${data.email}`);
-        console.log(res.data.url);
         window.open(res.data.url, '_blank');
       } catch (err) {
         if (err instanceof Yup.ValidationError) {

@@ -78,6 +78,7 @@ export const AuthProvider: React.FC = ({ children }) => {
     localStorage.setItem('@JIF:user', JSON.stringify(user));
 
     setData({ token, user });
+    history.push('/dashboard');
   }, []);
 
   const signOut = useCallback(() => {
