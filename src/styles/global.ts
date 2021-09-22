@@ -1,6 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
+
   *{
     margin: 0;
     padding: 0;
@@ -89,5 +90,9 @@ export default createGlobalStyle`
     table{
       width: 100%;
     }
+  }
+  * {
+    -webkit-print-color-adjust: exact !important;
+    color-adjust: exact !important;
   }
 `;

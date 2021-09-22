@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import api from '../services/api';
 
 interface AuthState {
@@ -55,6 +56,7 @@ export const AuthContext = createContext<AuthContextInterface>(
 );
 
 export const AuthProvider: React.FC = ({ children }) => {
+  const history = useHistory();
   const [data, setData] = useState<AuthState>(() => {
     const token = localStorage.getItem('@JIF:token');
     const user = localStorage.getItem('@JIF:user');
@@ -81,9 +83,9 @@ export const AuthProvider: React.FC = ({ children }) => {
   const signOut = useCallback(() => {
     localStorage.removeItem('@JIF:token');
     localStorage.removeItem('@JIF:user');
-
+    history.push('/');
     setData({} as AuthState);
-  }, []);
+  }, [history]);
 
   const verifyToken = useCallback(async () => {
     const token = localStorage.getItem('@JIF:token');

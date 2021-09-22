@@ -59,7 +59,6 @@ const FunctionForm: React.FC<ComponentProps> = ({ id, resetShowForm }) => {
             },
           },
         );
-        console.log(data);
         addToast({
           title: 'Funcção cadastrada com sucesso!',
           type: 'success',

@@ -66,7 +66,6 @@ const Relatory: React.FC = () => {
   const searchByModality = useCallback(async (data?: ListAthletesFormData) => {
     if (data) {
       setOpenFullRelatory(data.modality_id);
-      console.log(data);
     }
   }, []);
 
@@ -84,9 +83,9 @@ const Relatory: React.FC = () => {
         <h1>Relatório de inscrições</h1>
         {!openFullRelatory && (
           <Form ref={formRef} onSubmit={searchByModality}>
-            <h2>Buscar por delegação</h2>
+            <h2>Buscar por modalidade</h2>
             <Select id="modality_id" name="modality_id" options={modalities}>
-              Delegação
+              Modalidade
             </Select>
             <Button type="submit">Buscar</Button>
           </Form>
